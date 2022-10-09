@@ -2,6 +2,17 @@
 #include "../inc/vector.hpp"
 #include "../inc/stack.hpp"
 
+template <typename T>
+void	display_vector(ft::vector<T> &vec)
+{
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
+
 int main()
 {
 	using namespace std;
@@ -55,10 +66,17 @@ int main()
 	std::cout << "Capacity after push back: " << vec.capacity() << "\n";
 	std::cout << "Size: " << vec.size() << "\n";
 	std::cout << vec.back() << "\n";
-	std::cout << vec.at(111) << "\n";
+	// std::cout << vec.at(111) << "\n";
 	std::cout << vec.front() << "\n";
 	std::cout << "Reserve: \n";
 	std::cout << "Capacity before reserve 10: " << vec.capacity() << "\n";
 	vec.reserve(10);
 	std::cout << "Capacity after reserve 10: " << vec.capacity() << "\n";
+	vec.push_back(11);
+	vec.push_back(12);
+	display_vector(vec);
+	vec.pop_back();
+	vec.pop_back();
+	display_vector(vec);
+
 }
