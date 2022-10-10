@@ -1,9 +1,10 @@
 #include <iostream>
 #include "../inc/vector.hpp"
 #include "../inc/stack.hpp"
+#include <vector>
 
 template <typename T>
-void	display_vector(ft::vector<T> &vec)
+void display_vector(ft::vector<T> &vec)
 {
 	for (size_t i = 0; i < vec.size(); i++)
 	{
@@ -12,6 +13,15 @@ void	display_vector(ft::vector<T> &vec)
 	std::cout << std::endl;
 }
 
+template <typename T>
+void display_vector(std::vector<T> &vec)
+{
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
+}
 
 int main()
 {
@@ -20,6 +30,7 @@ int main()
 	ft::stack<int> s1;
 	ft::stack<int> s2;
 	ft::stack<int> s3;
+	vector<int> stdvec;
 
 	// s1.push(2);
 	// s1.push(4);
@@ -55,9 +66,8 @@ int main()
 	// 	s1.pop();
 	// }
 	// cout << ")." << endl;
-	
 
-	//VECTOR TESTS
+	// VECTOR TESTS
 	std::cout << vec.max_size() << " ";
 	std::cout << vec.size() << "\n";
 	std::cout << "Push back: \n";
@@ -66,7 +76,6 @@ int main()
 	std::cout << "Capacity after push back: " << vec.capacity() << "\n";
 	std::cout << "Size: " << vec.size() << "\n";
 	std::cout << vec.back() << "\n";
-	// std::cout << vec.at(111) << "\n";
 	std::cout << vec.front() << "\n";
 	std::cout << "Reserve: \n";
 	std::cout << "Capacity before reserve 10: " << vec.capacity() << "\n";
@@ -77,6 +86,13 @@ int main()
 	display_vector(vec);
 	vec.pop_back();
 	vec.pop_back();
+	vec.push_back(11);
 	display_vector(vec);
+	std::cout << "Begin: " << *vec.begin() << "\n";
+	std::cout << "End: " << *vec.end() << "\n";
+	std::cout << "vec size: " << vec.size() << "\n";
 
+	const ft::vector<int> constvec(vec);
+	std::cout << *constvec.begin() << "\n";
+	std::cout << *(constvec.end() - 1) << "\n";
 }
