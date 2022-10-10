@@ -2,6 +2,7 @@
 #include "../inc/vector.hpp"
 #include "../inc/stack.hpp"
 #include <vector>
+#include "reverse_iterator.hpp"
 
 template <typename T>
 void display_vector(ft::vector<T> &vec)

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cstddef>
 #include "utils.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -47,11 +48,11 @@ namespace ft
 			}
 			Iterator operator+(typename _super::difference_type const &other) const
 			{
-				return this->_ptr + other;
+				return Iterator(this->_ptr + other);
 			}
 			Iterator operator-(typename _super::difference_type const &other) const
 			{
-				return this->_ptr - other;
+				return Iterator(this->_ptr - other);
 			}
 			Iterator &operator+=(typename _super::difference_type const n)
 			{
@@ -85,8 +86,11 @@ namespace ft
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer;
 		typedef typename allocator_type::size_type size_type;
-		typedef Iterator<value_type> iterator;
 		typedef Iterator<const value_type> const_iterator;
+		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef Iterator<value_type> iterator;
+		typedef reverse_iterator<iterator>			reverse_iterator;
+
 		explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc), _array(0), _size(0), _capacity(0){};
 
 		explicit vector(size_type n, value_type &val = value_type(), const allocator_type &alloc = allocator_type())
