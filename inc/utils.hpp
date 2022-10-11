@@ -57,40 +57,7 @@ namespace ft
 		typedef Category iterator_category;
 	};
 
-	template <typename T>
-	class RandomAccessIterator : public iterator<std::random_access_iterator_tag, T>
-	{
-	public:
-		typedef typename iterator_traits<T *>::pointer pointer;
-		typedef typename iterator_traits<T *>::value_type value_type;
-		typedef typename iterator_traits<T *>::difference_type difference_type;
-		typedef typename iterator_traits<T *>::reference reference;
-		typedef typename iterator_traits<T *>::iterator_category iterator_category;
-		RandomAccessIterator() : _ptr()
-		{
-		}
-
-		RandomAccessIterator(pointer ptr) : _ptr(ptr) {}
-
-		RandomAccessIterator(RandomAccessIterator const &other) : _ptr(other._ptr)
-		{
-		}
-
-		RandomAccessIterator &operator=(RandomAccessIterator const &other)
-		{
-			if (this == &other)
-				return *this;
-			RandomAccessIterator new_ptr(other);
-			return new_ptr;
-		}
-
-		virtual ~RandomAccessIterator()
-		{
-		}
-
-	protected:
-		pointer _ptr;
-	};
+	
 
 	static class nullptr_t
 	{

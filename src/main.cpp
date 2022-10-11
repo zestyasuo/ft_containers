@@ -96,4 +96,6 @@ int main()
 	const ft::vector<int> constvec(vec);
 	std::cout << *constvec.begin() << "\n";
 	std::cout << *(constvec.end() - 1) << "\n";
+
+	std::cout << stdvec.begin() - stdvec.end() << "\n";
 }

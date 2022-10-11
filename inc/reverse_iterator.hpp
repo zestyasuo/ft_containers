@@ -4,14 +4,8 @@
 
 namespace ft
 {
-
 	template <class Iter>
-	class reverse_iterator : public ft::iterator<
-								typename ft::iterator_traits<Iter>::iterator_category,
-								typename ft::iterator_traits<Iter>::value_type,
-								typename ft::iterator_traits<Iter>::difference_type,
-								typename ft::iterator_traits<Iter>::pointer,
-								typename ft::iterator_traits<Iter>::reference>
+	class reverse_iterator
 	{
 	public:
 	 	typedef typename ft::iterator_traits<Iter>::iterator_categoty	iterator_category;
