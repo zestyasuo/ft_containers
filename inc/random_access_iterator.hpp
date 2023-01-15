@@ -5,7 +5,7 @@ namespace ft
 {
 
 	template <typename T>
-	class random_access_iterator : public iterator<std::random_access_iterator_tag, T>
+	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
 	{
 	public:
 		typedef typename iterator_traits<T *>::pointer pointer;

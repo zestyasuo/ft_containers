@@ -1,8 +1,10 @@
 #include <iostream>
 #include "../inc/vector.hpp"
 #include "../inc/stack.hpp"
-#include <vector>
 #include "reverse_iterator.hpp"
+#include "utils.hpp"
+#include "algorithm.hpp"
+#include <vector>
 
 template <typename T>
 void display_vector(ft::vector<T> &vec)

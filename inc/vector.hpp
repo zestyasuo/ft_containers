@@ -22,10 +22,11 @@ namespace ft
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer;
 		typedef typename allocator_type::size_type size_type;
-		typedef random_access_iterator<const value_type>			const_iterator;
-		typedef reverse_iterator<const_iterator>					const_reverse_iterator;
-		typedef random_access_iterator<value_type>					iterator;
-		typedef reverse_iterator<iterator>							reverse_iterator;
+		typedef ft::random_access_iterator<const value_type>			const_iterator;
+		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+		typedef ft::random_access_iterator<value_type>					iterator;
+		typedef ft::reverse_iterator<iterator>							reverse_iterator;
+		typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 
 		explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc), _array(0), _size(0), _capacity(0){};
 
@@ -242,6 +243,64 @@ namespace ft
 		iterator end() const
 		{
 			return (iterator(_array + (_size)));
+		}
+
+		template <class InputIterator>
+		void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = u_nullptr)
+		{
+			bool is_valid;
+			if (!(is_valid = ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category::value))
+				throw (ft:InvalidIteratorException<typename ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>());
+			this->clear();
+			size_type	dist = ft::distance(first, last);
+			if (_capacity >= dist)
+			{
+				for (;&(*first) != &(*last); first++, _size++)
+					_alloc.construct(&_array[size], *first);
+			}
+			else
+			{
+				pointer	new_array = pointer();
+				size_t	new_size = 0;
+				size_t	new_capacity = 0;
+
+				new_array = _alloc.allocate(dist);
+				new_capacity = dist;
+				for (; &(*first) != &(*last); first++, new_size++)
+					_alloc.construct(&new_array[new_size], *first);
+				_alloc.deallocate(_array, capacity());
+
+				_array = new_array;
+				_size = new_size;
+				_capacity = new_capacity;
+			}
+		}
+
+		void	assign (size_type n, value_type const &val)
+		{
+			clear();
+			if (n == 0)
+				return;
+			if (_capacity >= n)
+			{
+				while (n)
+				{
+					_alloc.construct(&_array[_size++], val);
+					n--;
+				}
+			}
+			else
+			{
+				_alloc.deallocate(_array, _capacity);
+				_array = _alloc.allocate(n);
+				_size = 0;
+				_capacity = n;
+				while (n)
+				{
+					_alloc.construct(_array[_size++], val);
+					n--;
+				}
+			}
 		}
 
 	private:

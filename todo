@@ -1,4 +1,13 @@
 vector - iterators
-map
+
 stack tests
-std:: functions
+
+check typedef typename std::prtdiff_t utils.hpp 213 and further
+
+vector :
+insert
+erase
+swap
+operators
+
+map full
