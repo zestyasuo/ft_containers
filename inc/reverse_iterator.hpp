@@ -156,7 +156,7 @@ namespace ft
 	reverse_iterator<Iterator> operator+ (typename reverse_iterator<Iterator>::difference_type n,
 										reverse_iterator<Iterator> const revit)
 	{
-		return rev_it + n;
+		return revit + n;
 	}
 
 	template <class Iterator>

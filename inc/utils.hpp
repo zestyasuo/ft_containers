@@ -1,5 +1,7 @@
 #ifndef utils_HPP
-#define utils_HPP
+# define utils_HPP
+
+# include <typeinfo>
 namespace ft
 {
 	// enable if
@@ -179,7 +181,7 @@ namespace ft
 			InvalidIteratorException(InvalidIteratorException const &) throw() {}
 			InvalidIteratorException &operator=(InvalidIteratorException const &) throw() {}
 			virtual ~InvalidIteratorException() throw() {}
-			virtual const char *what const throw()
+			virtual const char *what() const throw()
 			{
 				return _msg.c_str();
 			}

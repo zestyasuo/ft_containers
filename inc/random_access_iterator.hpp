@@ -8,13 +8,14 @@ namespace ft
 	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
 	{
 	public:
-		typedef typename iterator_traits<T *>::pointer pointer;
-		typedef typename iterator_traits<T *>::value_type value_type;
-		typedef typename iterator_traits<T *>::difference_type difference_type;
-		typedef typename iterator_traits<T *>::reference reference;
-		typedef typename iterator_traits<T *>::iterator_category iterator_category;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category iterator_category;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type		value_type;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type	difference_type;
+		typedef T*			pointer;
+		typedef	T&			reference;
 
-		random_access_iterator() : _ptr()
+
+		random_access_iterator() : _ptr(u_nullptr)
 		{
 		}
 
@@ -187,12 +188,12 @@ namespace ft
 
 	template<typename T>
 	typename random_access_iterator<T>::difference_type	operator-(random_access_iterator<T> const &lhs, random_access_iterator<T> const &rhs) {
-		lhs.base() - rhs.base();
+		return lhs.base() - rhs.base();
 	}
 
 	template<typename Tl, typename Tr>
 	typename random_access_iterator<Tl>::difference_type	operator-(random_access_iterator<Tl> const &lhs, random_access_iterator<Tr> const &rhs) {
-		lhs.base() - rhs.base();
+		return lhs.base() - rhs.base();
 	}
 }
 #endif

@@ -4,7 +4,7 @@
 namespace ft
 {
 	template<class InputIterator1, class InputIterator2>
-	bool lexicograhical_compare(InputIterator1 lit, InputIterator1 lend, InputIterator2 rit, InputIterator2 rend)
+	bool lexicographical_compare(InputIterator1 lit, InputIterator1 lend, InputIterator2 rit, InputIterator2 rend)
 	{
 		while (lit != lend)
 		{
