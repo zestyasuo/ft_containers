@@ -10,9 +10,7 @@
 
 namespace ft
 {
-	template <
-		class T,
-		class Allocator = std::allocator<T> >
+	template < class T, class Allocator = std::allocator<T> >
 	class vector
 	{
 	public:
@@ -32,7 +30,7 @@ namespace ft
 		explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc), _array(0), _size(0), _capacity(0){};
 
 		explicit vector(size_type n, value_type const &val = value_type(), const allocator_type &alloc = allocator_type())
-			: _alloc(alloc), _size(n), _capacity(n)
+			: _alloc(alloc), _array(u_nullptr), _size(n), _capacity(n)
 		{
 			_array = _alloc.allocate(n);
 			for (size_type i = 0; i < n; i++)
@@ -40,8 +38,13 @@ namespace ft
 		}
 
 		template<class InputIterator>
-		vector(InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type(), typename enable_if<!is_integral<InputIterator>::value>::type * = 0) : _alloc(alloc)
+		vector(InputIterator first, InputIterator last,
+				allocator_type const &alloc = allocator_type(),
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = u_nullptr) : _alloc(alloc)
 		{
+			bool is_valid = ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category >::value;
+			if (!is_valid)
+				throw ft::InvalidIteratorException<typename ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>();
 			if (first > last)
 				throw std::length_error("vector");
 			_size = last - first;
@@ -52,21 +55,27 @@ namespace ft
 		}
 
 		vector(const vector &other):
-			_alloc(other._alloc),
-			_array(other._array),
-			_size(other._size),
-			_capacity(other._capacity)
+			_size(0), _capacity(0)
 		{
-			insert(begin(), other.begin(), other.end());
+			*this = other;
 		}
 
-		vector &operator=(const vector &other)
+		vector &operator=(const vector &x)
 		{
-			if (other == *this)
-				return (*this);
-			clear();
-			insert(end(), other.begin(), other.end());
-			return (*this);
+			if (this == &x)
+				return *this;
+			for (size_type i = 0; i < _size; i++)
+				_alloc.destroy(_array + i);
+			this->_size = x._size;
+			if(_capacity < _size){
+				if (_capacity != 0)
+					_alloc.deallocate(_array, _capacity);
+				_capacity = _size;
+				_array = _alloc.allocate(_capacity);
+			}
+			for (size_type i = 0; i < _size; i++)
+				_alloc.construct(_array + i, x[i]);
+			return *this;
 		}
 
 		size_type size(void) const
@@ -196,9 +205,15 @@ namespace ft
 
 		void clear()
 		{
-			for (size_type i = 0; i < _size; i++)
-				_alloc.destroy(&_array[i]);
-			_size = 0;
+			size_type size = _size;
+			for (size_type i = 0; i < size; i++)
+			{
+				_alloc.destroy(&_array[_size]);
+				_size--;
+			}
+			// for (size_type i = 0; i < _size; i++)
+			// 	_alloc.destroy(&_array[i]);
+			// _size = 0;
 		}
 
 		// void assign(size_type n, const value_type &val)
@@ -221,19 +236,22 @@ namespace ft
 
 		~vector(void)
 		{
-			for (size_type i = 0; i < _size; i++)
-				_alloc.destroy(&_array[i]);
-			if (_capacity)
+			clear();
+			if (_array)
 				_alloc.deallocate(_array, _capacity);
+			// for (size_type i = 0; i < _size; i++)
+				// _alloc.destroy(&_array[i]);
+			// if (_capacity)
+				// _alloc.deallocate(_array, _capacity);
 		};
 
 		iterator begin()
 		{
-			return (iterator(_array));
+			return (_array);
 		}
 		const_iterator begin() const
 		{
-			return (const_iterator(_array));
+			return (_array);
 		}
 		reverse_iterator rbegin()
 		{
@@ -241,7 +259,7 @@ namespace ft
 		}
 		const_reverse_iterator rbegin() const
 		{
-			return reverse_iterator(end());
+			return const_reverse_iterator(end());
 		}
 		reverse_iterator rend()
 		{
@@ -249,11 +267,15 @@ namespace ft
 		}
 		const_reverse_iterator rend() const
 		{
-			return reverse_iterator(begin());
+			return const_reverse_iterator(begin());
 		}
-		iterator end() const
+		iterator end()
 		{
-			return (iterator(_array + (_size)));
+			return _array + _size;
+		}
+		const_iterator end() const
+		{
+			return ((_array + (_size)));
 		}
 
 		template <class InputIterator>
@@ -392,7 +414,7 @@ namespace ft
 					new_cap = next_cap;
 				}
 
-				for (size_type i = 0; i < &(*position) - _array; i++)
+				for (size_type i = 0; i < size_type(&(*position) - _array); i++)
 					_alloc.construct(new_array + i, _array[i]);
 				for (size_type i = 0; i < n; i++)
 					_alloc.construct(new_array + pos_len + i, val);
@@ -446,7 +468,7 @@ namespace ft
 					new_cap = new_size;
 				}
 
-				for (size_type i = 0; i < &(*position) - _array; i++)
+				for (size_type i = 0; i < size_type(&(*position) - _array); i++)
 					_alloc.construct(new_array + i, _array[i]);
 				for (size_type i = 0; &(*first) != &(*last); first++, i++)
 					_alloc.construct(_array + (&(*position) - _array) + i, *first);
@@ -537,7 +559,7 @@ namespace ft
 	template <class T, class Alloc>
 	bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
 	{
-		return rhs < lhs;
+		return (rhs < lhs);
 	}
 	template <class T, class Alloc>
 	bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)

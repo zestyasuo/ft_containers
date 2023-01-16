@@ -1,7 +1,12 @@
 #ifndef utils_HPP
 # define utils_HPP
-
+# include <cstddef>
+# include <limits>
+# include <sstream>
 # include <typeinfo>
+# include <iostream>
+# include <typeinfo>
+
 namespace ft
 {
 	// enable if
@@ -232,13 +237,14 @@ namespace ft
 
 	template <class Category, class T, class Distance = ptrdiff_t,
 			  class Pointer = T *, class Reference = T &>
-	struct iterator
+	class iterator
 	{
-		typedef T value_type;
-		typedef Distance difference_type;
-		typedef Pointer pointer;
-		typedef Reference reference;
-		typedef Category iterator_category;
+		public:
+			typedef T value_type;
+			typedef Distance difference_type;
+			typedef Pointer pointer;
+			typedef Reference reference;
+			typedef Category iterator_category;
 	};
 
 	template<class InputIterator>

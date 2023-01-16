@@ -1,5 +1,5 @@
-CC			=	clang++
-CFLAGS		=	-Wall -Wextra -Werror -std=c++98 -g #-fsanitize=address -g
+CC			=	g++
+CFLAGS		=	-Wall -Wextra -Werror -std=c++98 -g -fsanitize=leak,address,undefined
 
 SRC_PATH	=	./src
 OBJ_PATH	=	obj
