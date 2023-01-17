@@ -6,7 +6,7 @@
 /*   By: zyasuo <zyasuo@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 17:54:42 by rchallie          #+#    #+#             */
-/*   Updated: 2023/01/17 00:10:01 by zyasuo           ###   ########.fr       */
+/*   Updated: 2023/01/17 23:01:25 by zyasuo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,7 +359,7 @@ void test_vector()
         fs.open("./tester/vectors_output/iterator_const_begin", std::fstream::in | std::fstream::out | std::fstream::trunc);
         
         std::vector<int>::const_iterator stl_const_it = stl_range_vector.begin();
-        ft::vector<int>::const_iterator ft_const_it ; //= ft_range_vector.begin();
+        ft::vector<int>::const_iterator ft_const_it = ft_range_vector.begin();
         const int from_stl = *(stl_const_it);
         const int from_ft = *(ft_const_it);
 

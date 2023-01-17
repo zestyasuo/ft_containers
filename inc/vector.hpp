@@ -471,7 +471,7 @@ namespace ft
 				for (size_type i = 0; i < size_type(&(*position) - _array); i++)
 					_alloc.construct(new_array + i, _array[i]);
 				for (size_type i = 0; &(*first) != &(*last); first++, i++)
-					_alloc.construct(_array + (&(*position) - _array) + i, *first);
+					_alloc.construct(new_array + (&(*position) - _array) + i, *first);
 				for (size_type i = 0; i < _size - (&(*position) - _array); i++)
 					_alloc.construct(new_array + (&(*position) - _array) + dist + i, _array[(&(*position) - _array) + i]);
 				
