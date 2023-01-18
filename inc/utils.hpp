@@ -9,6 +9,8 @@
 
 namespace ft
 {
+
+	template<class T> struct remove_const { typedef T type; };
 	// enable if
 	template<bool B, class T = void>
 	struct enable_if
@@ -270,7 +272,8 @@ namespace ft
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::reference reference;
 		pointer _elem;
 	};
-	
+
+
 	static class nullptr_t
 	{
 	public:
@@ -283,6 +286,51 @@ namespace ft
 		void operator&() const;
 
 	} u_nullptr = {};
+
+	template<typename T>
+	struct TreeNode
+	{
+		typedef T value_type;
+		
+		value_type		value;
+		TreeNode		*parent;
+		TreeNode		*left;
+		TreeNode		*right;
+
+		TreeNode(void) : value(), parent(u_nullptr), left(u_nullptr), right(u_nullptr)
+		{}
+
+		TreeNode(value_type const &val, TreeNode *parent = u_nullptr, TreeNode *left = u_nullptr, TreeNode *right = u_nullptr)
+		: value(val), parent(parent), left(left), right(right)
+		{}
+
+		TreeNode(TreeNode *parent = u_nullptr, TreeNode *left = u_nullptr, TreeNode *right = u_nullptr) : value(), parent(parent), left(left), right(right)
+		{}
+
+		TreeNode(TreeNode const &other) : value(other.value), parent(other.parent), left(other.left), right(other.right)
+		{}
+
+		virtual ~TreeNode() {}
+
+		TreeNode	&operator=(TreeNode const &other)
+		{
+			if (&other == this)
+				return (*this);
+			value = other.value;
+			parent = other.parent;
+			left = other.left;
+			right = other.right;
+			return (*this);
+		}
+
+		bool	operator==(TreeNode const &other)
+		{
+			if (value == other.value)
+				return true;
+			return false;
+		}
+	};
+	
 }
 
 #endif
