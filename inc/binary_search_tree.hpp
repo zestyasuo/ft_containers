@@ -20,7 +20,7 @@ namespace ft
 		typedef Node	*node_pointer;
 		typedef	Node_Allocator	node_allocator;
 		typedef	ft::tree_iterator<Node, Compare>	iterator;
-		typedef	ft::tree_iterator<const Node, Compare>	const_iterator;
+		typedef	ft::tree_const_iterator<Node, Compare>	const_iterator;
 		typedef	size_t	size_type;
 
 		binary_search_tree(node_allocator const &al = node_allocator()) : _node_alloc(al)
@@ -33,11 +33,6 @@ namespace ft
 			_node_alloc.destroy(_last_node);
 			_node_alloc.deallocate(_last_node, 1);
 		}
-		
-		// operator binary_search_tree<const T, Compare, Allocator, Node, Node_Allocator>() const
-		// {
-		// 	return binary_search_tree<const T, Compare, Allocator, Node, Node_Allocator>();
-		// }
 
 		ft::pair<iterator, bool>	insertPair(value_type ins)
 		{
