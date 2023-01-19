@@ -132,7 +132,6 @@ namespace ft
 			return tree_iterator<const T, Compare>(_node, _last_node, _comp);
 		}
 
-	// private:
 		T	*_node;
 		T	*_last_node;
 		Compare	_comp;

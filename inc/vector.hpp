@@ -211,20 +211,7 @@ namespace ft
 				_alloc.destroy(&_array[_size]);
 				_size--;
 			}
-			// for (size_type i = 0; i < _size; i++)
-			// 	_alloc.destroy(&_array[i]);
-			// _size = 0;
 		}
-
-		// void assign(size_type n, const value_type &val)
-		// {
-		// 	resize(n);
-		// 	clear();
-		// 	for (size_type i = 0; i < _size; i++)
-		// 	{
-		// 		_alloc.construct(&_array[i], val);
-		// 	}
-		// }
 
 		void swap(vector &other)
 		{
@@ -239,10 +226,6 @@ namespace ft
 			clear();
 			if (_array)
 				_alloc.deallocate(_array, _capacity);
-			// for (size_type i = 0; i < _size; i++)
-				// _alloc.destroy(&_array[i]);
-			// if (_capacity)
-				// _alloc.deallocate(_array, _capacity);
 		};
 
 		iterator begin()
@@ -361,7 +344,7 @@ namespace ft
 					_alloc.construct(new_array + i, _array[i]);
 				_alloc.construct(new_array + pos_len, val);
 				for (size_type j = 0; j < _size - pos_len; j++)
-					_alloc.construct(&_array[_size - j - 1], _array[_size - j - 1]);
+					_alloc.construct(&new_array[new_size - j - 1], _array[_size - j - 1]);
 				
 				for (size_type l = 0; l < _size; l++)
 					_alloc.destroy(&_array[l]);
@@ -500,28 +483,16 @@ namespace ft
 
 		iterator erase(iterator first, iterator last)
 		{
-			difference_type start = ft::distance(begin(), first);
-			difference_type to_copy = ft::distance(begin(), first);
-
-			bool last_is_end = (last == (end()));
-			while (first != last)
-			{
+			pointer p_first = &(*first);
+			for (; &(*first) != &(*last); first++)
 				_alloc.destroy(&(*first));
-				first++;
-			}
-			size_type i = start;
-			while (last < end())
+			for (int i = 0; i < &_array[_size] - &(*last); i++)
 			{
-				if (_array + start)
-					_alloc.destroy(_array + i);
-				_alloc.construct(_array + i, *last);
-				i++;
-				last++;
+				_alloc.construct(p_first + i, *(&(*last) + i));
+				_alloc.destroy(&(*last) + i);
 			}
-			for (size_type i = start + to_copy; i < _size; i++)
-				_alloc.destroy(_array + i);
-			_size = start + to_copy;
-			return last_is_end ? end() : iterator(_array + start);
+			_size -= (&(*last) - p_first);
+			return iterator(p_first);
 		}
 
 	private:

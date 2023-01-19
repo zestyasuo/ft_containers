@@ -9,8 +9,6 @@
 
 namespace ft
 {
-
-	template<class T> struct remove_const { typedef T type; };
 	// enable if
 	template<bool B, class T = void>
 	struct enable_if

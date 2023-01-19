@@ -1336,7 +1336,7 @@ void test_vector()
         ft_erase.erase(ft_erase.begin() + 1, ft_erase.end() - 2);
         
         fs.open("./tester/vectors_output/erase_range", std::fstream::in | std::fstream::out | std::fstream::trunc);
-        std::cout << ((printVectorAttributes(fs, stl_erase, ft_erase) == true) ? "[OK]" : "[NOP]");
+        std::cout << ((printVectorAttributes(fs, stl_erase, ft_erase) == true) ? "[OK]" : "[markNOP]");
         fs << "\nCode executed:\n";
         fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
         fs << "int range_array[] = {1458, -98, 745, 62, 9};\n";
