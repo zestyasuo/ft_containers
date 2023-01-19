@@ -2,3 +2,4 @@ obj/
 containers
 .*
 tester/
+tests

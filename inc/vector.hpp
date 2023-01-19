@@ -107,7 +107,7 @@ namespace ft
 			}
 			catch (std::exception &e)
 			{
-				for (size_type i = 0; new_array[i] && i < _size; i++)
+				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(&new_array[i]);
 				_alloc.deallocate(new_array, n);
 				throw;
